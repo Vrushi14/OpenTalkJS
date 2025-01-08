@@ -1,5 +1,5 @@
 import ollama from "ollama";
-import fs from "fs";
+
 
 let input = process.argv[2];
 let q;
@@ -32,7 +32,7 @@ try {
       break;
     case "Technical_Content":
     case "Marketing_Content":
-      q = `./${input}/q${n}.txt`;
+      q = `./Category/${input}/q${n}.txt`;
       break;
     default:
       throw new Error("Invalid input category.");
