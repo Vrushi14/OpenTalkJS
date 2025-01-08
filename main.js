@@ -2,14 +2,21 @@ import fs from 'fs';
 
 import ollama from "ollama";
 
-const q = fs.readFileSync("q.txt", "utf8");
+async function ask_question(q) {
+    const response = await ollama.chat({
+        model: "llama3.2:1b",
+        messages: [{ role: "user", content: q }],
+    });
+    let ans = response.message.content;
+    fs.writeFile(`a.txt`,ans,(err)=>{
+        if(err){
+            throw err;
+        }
+    });
+}
 
-
-const response = await ollama.chat({
-    model: "llama3.2:1b",
-    messages: [{ role: "user", content: q }],
-});
-
-const a = response.message.content;
-
-fs.writeFileSync("a.txt", a);
+ask_question(fs.readFileSync("q.txt", 'utf8',(err)=>{
+        if(err){
+            throw err;
+        }
+    }));
